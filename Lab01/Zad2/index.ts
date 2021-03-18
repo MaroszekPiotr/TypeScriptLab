@@ -27,7 +27,9 @@ interface Person {
             let criteriaKeys = Object.keys(criteria) as (keyof Person)[];
             return criteriaKeys.every((fieldName) => {
             return person[fieldName] === criteria[fieldName];
-        })})};
+            })
+        })
+    };
     // TODO: zaimplementować funkcję, która przefiltruje tablicę persons za pomocą predykatu criteria
     console.log('-------------------------------------');
     console.log('Przy pomocy funkcji logPerson wypisać osoby z tablicy users');
