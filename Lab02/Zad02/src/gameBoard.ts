@@ -7,16 +7,18 @@ export default class GameBoard{
     }
     DrawGameBoard():HTMLTableElement{
         const board:HTMLTableElement = document.createElement('table');
+
+        const createGameBoard= () => {
+            for (let i =0; i< this.sizeX;i++){
+                const row:HTMLElement = document.createElement('tr');
+                for (let j = 0; j<this.sizeY;j++){
+                    row.appendChild(document.createElement('th'));
+                }
+                board.appendChild(row);
+            }        
+        }
+        createGameBoard();
         return board;
-        // const createGameBoard:HTMLTableElement() {
-        //     for (let i =0; i< sizeX;i++){
-        //         const row = document.createElement('tr');
-        //         for (let j = 0; j<sizeY;j++){
-        //             row.appendChild(document.createElement('th'));
-        //         }
-        //         board.appendChild(row);
-        //     }
-        // }
     }
 
 }

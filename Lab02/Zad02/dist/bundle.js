@@ -16,7 +16,7 @@
   \********************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-eval("\r\nexports.__esModule = true;\r\nvar gameBoard_1 = __webpack_require__(/*! ./gameBoard */ \"./src/gameBoard.ts\");\r\nvar root = document.getElementById('root');\r\nroot.textContent = 'działa';\r\nconsole.log(new gameBoard_1[\"default\"]().DrawGameBoard());\r\n\n\n//# sourceURL=webpack:///./src/app.ts?");
+eval("\r\nexports.__esModule = true;\r\nvar gameBoard_1 = __webpack_require__(/*! ./gameBoard */ \"./src/gameBoard.ts\");\r\nvar root = document.getElementById('root');\r\nroot.textContent = 'działa';\r\nconsole.log(new gameBoard_1[\"default\"](3, 3).DrawGameBoard());\r\n\n\n//# sourceURL=webpack:///./src/app.ts?");
 
 /***/ }),
 
@@ -26,7 +26,7 @@ eval("\r\nexports.__esModule = true;\r\nvar gameBoard_1 = __webpack_require__(/*
   \**************************/
 /***/ ((__unused_webpack_module, exports) => {
 
-eval("\r\nexports.__esModule = true;\r\nvar GameBoard = /** @class */ (function () {\r\n    function GameBoard(sizeX, sizeY) {\r\n        if (sizeX === void 0) { sizeX = 3; }\r\n        if (sizeY === void 0) { sizeY = sizeX; }\r\n        this.sizeX = sizeX;\r\n        this.sizeY = sizeY;\r\n    }\r\n    GameBoard.prototype.DrawGameBoard = function () {\r\n        var board = document.createElement('table');\r\n        return board;\r\n        // const createGameBoard:HTMLTableElement() {\r\n        //     for (let i =0; i< sizeX;i++){\r\n        //         const row = document.createElement('tr');\r\n        //         for (let j = 0; j<sizeY;j++){\r\n        //             row.appendChild(document.createElement('th'));\r\n        //         }\r\n        //         board.appendChild(row);\r\n        //     }\r\n        // }\r\n    };\r\n    return GameBoard;\r\n}());\r\nexports.default = GameBoard;\r\n\n\n//# sourceURL=webpack:///./src/gameBoard.ts?");
+eval("\r\nexports.__esModule = true;\r\nvar GameBoard = /** @class */ (function () {\r\n    function GameBoard(sizeX, sizeY) {\r\n        if (sizeX === void 0) { sizeX = 3; }\r\n        if (sizeY === void 0) { sizeY = sizeX; }\r\n        this.sizeX = sizeX;\r\n        this.sizeY = sizeY;\r\n    }\r\n    GameBoard.prototype.DrawGameBoard = function () {\r\n        var _this = this;\r\n        var board = document.createElement('table');\r\n        var createGameBoard = function () {\r\n            for (var i = 0; i < _this.sizeX; i++) {\r\n                var row = document.createElement('tr');\r\n                for (var j = 0; j < _this.sizeY; j++) {\r\n                    row.appendChild(document.createElement('th'));\r\n                }\r\n                board.appendChild(row);\r\n            }\r\n        };\r\n        createGameBoard();\r\n        return board;\r\n    };\r\n    return GameBoard;\r\n}());\r\nexports.default = GameBoard;\r\n\n\n//# sourceURL=webpack:///./src/gameBoard.ts?");
 
 /***/ })
 
