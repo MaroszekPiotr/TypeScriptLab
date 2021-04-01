@@ -59,7 +59,8 @@ export default class GameBoard {
     boardElement.playerId = this.currentPlayerIndex;
     this.moveNumber++;
     cell.removeEventListener("click", functionReference);
-    this.CheckIfWin(this.currentPlayerIndex, boardElement);
+    if (this.CheckIfWin(this.currentPlayerIndex, boardElement))
+      console.log("wygrana");
     this.SwitchPlayer();
   }
   private SwitchPlayer(): void {
@@ -72,23 +73,15 @@ export default class GameBoard {
       const playerPositions: Cell[] = this.boardArray.filter(
         (cell) => cell.playerId === playerId
       );
-      if (this.checkVertical(playerId, actualCell, playerPositions))
-        return true;
-      if (this.checkHorizontal(playerId, actualCell, playerPositions))
-        return true;
-      if (this.checkDiagonalLeft(playerId, actualCell, playerPositions))
-        return true;
-      if (this.checkDiagonalRight(playerId, actualCell, playerPositions))
-        return true;
+      if (this.checkVertical(actualCell, playerPositions)) return true;
+      if (this.checkHorizontal(actualCell, playerPositions)) return true;
+      if (this.checkDiagonalLeft(actualCell, playerPositions)) return true;
+      if (this.checkDiagonalRight(actualCell, playerPositions)) return true;
     }
     return false;
   }
 
-  private checkVertical(
-    playerId: number,
-    actualCell: Cell,
-    playerPositions: Cell[]
-  ): boolean {
+  private checkVertical(actualCell: Cell, playerPositions: Cell[]): boolean {
     let counter = 1;
     let i: number;
     const checkCondition = () =>
@@ -108,11 +101,7 @@ export default class GameBoard {
     if (counter >= this.lenghtRouteToWin) return true;
     return false;
   }
-  private checkHorizontal(
-    playerId: number,
-    actualCell: Cell,
-    playerPositions: Cell[]
-  ): boolean {
+  private checkHorizontal(actualCell: Cell, playerPositions: Cell[]): boolean {
     let counter = 1;
     let i: number;
     const checkCondition = () =>
@@ -133,7 +122,6 @@ export default class GameBoard {
     return false;
   }
   private checkDiagonalLeft(
-    playerId: number,
     actualCell: Cell,
     playerPositions: Cell[]
   ): boolean {
@@ -158,7 +146,6 @@ export default class GameBoard {
     return false;
   }
   private checkDiagonalRight(
-    playerId: number,
     actualCell: Cell,
     playerPositions: Cell[]
   ): boolean {
