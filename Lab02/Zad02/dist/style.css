@@ -16,14 +16,11 @@ td {
   border: 5px solid black;
   text-align: center;
   border-collapse: collapse;
-}
-table {
-  width: 15vw;
-  height: 15vw;
   background-color: bisque;
 }
 td {
   width: 5vw;
+  height: 5vw;
   font-size: 3rem;
   cursor: pointer;
 }

@@ -7,6 +7,7 @@ export default class GameBoard {
   currentPlayerIndex: number;
   lenghtRouteToWin: number;
   boardArray: Cell[];
+  moveNumber: number;
   constructor(sizeX: number = 3, sizeY: number = sizeX) {
     this.sizeX = sizeX;
     this.sizeY = sizeY;
@@ -14,6 +15,7 @@ export default class GameBoard {
     this.players = [new Player(this, "Human", 0), new Player(this, "Human", 1)];
     this.currentPlayerIndex = 0;
     this.lenghtRouteToWin = 3;
+    this.moveNumber = 0;
   }
   DrawGameBoard(): HTMLTableElement {
     const htmlBoard: HTMLTableElement = document.createElement("table");
@@ -29,7 +31,7 @@ export default class GameBoard {
     for (let i = 0; i < numberOfRows; i++) {
       const row: HTMLElement = document.createElement("tr");
       for (let j = 0; j < numberOfCells; j++) {
-        this.AddCell(row, numberOfCells);
+        this.AddCell(row, i, j);
       }
       htmlBoard.appendChild(row);
     }
@@ -42,7 +44,7 @@ export default class GameBoard {
     const boardElement = new Cell(rowPosition, columnPosition);
     this.boardArray.push(boardElement);
     const cell: HTMLTableCellElement = document.createElement("td");
-    cell.textContent = "0";
+    cell.textContent = "";
     const functionReference = () =>
       this.GetMove(cell, boardElement, functionReference);
     cell.addEventListener("click", functionReference);
@@ -55,7 +57,9 @@ export default class GameBoard {
   ): void {
     cell.textContent = this.players[this.currentPlayerIndex].playerSign;
     boardElement.playerId = this.currentPlayerIndex;
+    this.moveNumber++;
     cell.removeEventListener("click", functionReference);
+    this.CheckIfWin(this.currentPlayerIndex, boardElement);
     this.SwitchPlayer();
   }
   private SwitchPlayer(): void {
@@ -63,5 +67,119 @@ export default class GameBoard {
       this.currentPlayerIndex = 0;
     else this.currentPlayerIndex++;
   }
-  private CheckIfWin(playerId: number, actualCell: Cell): void {}
+  private CheckIfWin(playerId: number, actualCell: Cell): boolean {
+    if (this.moveNumber >= this.lenghtRouteToWin * this.players.length - 1) {
+      const playerPositions: Cell[] = this.boardArray.filter(
+        (cell) => cell.playerId === playerId
+      );
+      if (this.checkVertical(playerId, actualCell, playerPositions))
+        return true;
+      if (this.checkHorizontal(playerId, actualCell, playerPositions))
+        return true;
+      if (this.checkDiagonalLeft(playerId, actualCell, playerPositions))
+        return true;
+      if (this.checkDiagonalRight(playerId, actualCell, playerPositions))
+        return true;
+    }
+    return false;
+  }
+
+  private checkVertical(
+    playerId: number,
+    actualCell: Cell,
+    playerPositions: Cell[]
+  ): boolean {
+    let counter = 1;
+    let i: number;
+    const checkCondition = () =>
+      playerPositions.findIndex(
+        (position) =>
+          position.positionY === actualCell.positionY &&
+          position.positionX === i
+      );
+    for (i = actualCell.positionX - 1; i >= 0; i--) {
+      if (checkCondition() >= 0) counter++;
+      else break;
+    }
+    for (i = actualCell.positionX + 1; i >= 0; i++) {
+      if (checkCondition() >= 0) counter++;
+      else break;
+    }
+    if (counter >= this.lenghtRouteToWin) return true;
+    return false;
+  }
+  private checkHorizontal(
+    playerId: number,
+    actualCell: Cell,
+    playerPositions: Cell[]
+  ): boolean {
+    let counter = 1;
+    let i: number;
+    const checkCondition = () =>
+      playerPositions.findIndex(
+        (position) =>
+          position.positionX === actualCell.positionX &&
+          position.positionY === i
+      );
+    for (i = actualCell.positionY - 1; i >= 0; i--) {
+      if (checkCondition() >= 0) counter++;
+      else break;
+    }
+    for (i = actualCell.positionY + 1; i >= 0; i++) {
+      if (checkCondition() >= 0) counter++;
+      else break;
+    }
+    if (counter >= this.lenghtRouteToWin) return true;
+    return false;
+  }
+  private checkDiagonalLeft(
+    playerId: number,
+    actualCell: Cell,
+    playerPositions: Cell[]
+  ): boolean {
+    let counter = 1;
+    let i: number;
+    let j: number;
+    const checkCondition = () =>
+      playerPositions.findIndex(
+        (position) => position.positionX === i && position.positionY === j
+      );
+    // prettier-ignore
+    for (i = actualCell.positionX - 1, j = actualCell.positionY - 1; i >= 0; i--, j--) {
+      if (checkCondition() >= 0) counter++;
+      else break;
+    }
+    // prettier-ignore
+    for (i = actualCell.positionX + 1, j = actualCell.positionY + 1; i >= 0; i++, j++) {
+      if (checkCondition() >= 0) counter++;
+      else break;
+    }
+    if (counter >= this.lenghtRouteToWin) return true;
+    return false;
+  }
+  private checkDiagonalRight(
+    playerId: number,
+    actualCell: Cell,
+    playerPositions: Cell[]
+  ): boolean {
+    let counter = 1;
+    let i: number;
+    let j: number;
+    const checkCondition = () =>
+      playerPositions.findIndex(
+        (position) => position.positionX === i && position.positionY === j
+      );
+    // prettier-ignore
+    for (i = actualCell.positionX + 1, j = actualCell.positionY - 1; j >= 0; i++, j--) {
+      if (checkCondition() >= 0) counter++;
+      else break;
+    }
+    // prettier-ignore
+    for (i = actualCell.positionX - 1, j = actualCell.positionY + 1; i >= 0;i--, j++) {
+      if (checkCondition() >= 0) counter++;
+      else break;
+    }
+    if (counter >= this.lenghtRouteToWin) return true;
+    return false;
+  }
 }
