@@ -16,7 +16,17 @@
   \********************/
 /***/ ((__unused_webpack_module, exports, __webpack_require__) => {
 
-eval("\r\nexports.__esModule = true;\r\nvar gameBoard_1 = __webpack_require__(/*! ./gameBoard */ \"./src/gameBoard.ts\");\r\nvar root = document.getElementById('root');\r\nroot.textContent = 'działa';\r\nconsole.log(new gameBoard_1[\"default\"](3, 3).DrawGameBoard());\r\n\n\n//# sourceURL=webpack:///./src/app.ts?");
+eval("\r\nexports.__esModule = true;\r\nvar gameBoard_1 = __webpack_require__(/*! ./gameBoard */ \"./src/gameBoard.ts\");\r\nvar root = document.getElementById(\"root\");\r\nroot.appendChild(new gameBoard_1[\"default\"](3, 3).DrawGameBoard());\r\n\n\n//# sourceURL=webpack:///./src/app.ts?");
+
+/***/ }),
+
+/***/ "./src/cell.ts":
+/*!*********************!*\
+  !*** ./src/cell.ts ***!
+  \*********************/
+/***/ ((__unused_webpack_module, exports) => {
+
+eval("\r\nexports.__esModule = true;\r\nvar Cell = /** @class */ (function () {\r\n    function Cell(positionX, positionY) {\r\n        this.cellValue = \"\";\r\n        this.positionX = positionX;\r\n        this.positionY = positionY;\r\n    }\r\n    Cell.prototype.printCell = function () {\r\n        var value;\r\n    };\r\n    return Cell;\r\n}());\r\nexports.default = Cell;\r\n\n\n//# sourceURL=webpack:///./src/cell.ts?");
 
 /***/ }),
 
@@ -24,9 +34,19 @@ eval("\r\nexports.__esModule = true;\r\nvar gameBoard_1 = __webpack_require__(/*
 /*!**************************!*\
   !*** ./src/gameBoard.ts ***!
   \**************************/
+/***/ ((__unused_webpack_module, exports, __webpack_require__) => {
+
+eval("\r\nexports.__esModule = true;\r\nvar cell_1 = __webpack_require__(/*! ./cell */ \"./src/cell.ts\");\r\nvar player_1 = __webpack_require__(/*! ./player */ \"./src/player.ts\");\r\nvar GameBoard = /** @class */ (function () {\r\n    function GameBoard(sizeX, sizeY) {\r\n        if (sizeX === void 0) { sizeX = 3; }\r\n        if (sizeY === void 0) { sizeY = sizeX; }\r\n        this.sizeX = sizeX;\r\n        this.sizeY = sizeY;\r\n        this.boardArray = [];\r\n        this.players = [new player_1[\"default\"](this, \"Human\", 0), new player_1[\"default\"](this, \"Human\", 1)];\r\n        this.currentPlayerIndex = 0;\r\n        this.lenghtRouteToWin = 3;\r\n    }\r\n    GameBoard.prototype.DrawGameBoard = function () {\r\n        var htmlBoard = document.createElement(\"table\");\r\n        htmlBoard.className = \"GameBoard\";\r\n        this.CreateGameBoard(htmlBoard, this.sizeX, this.sizeY);\r\n        return htmlBoard;\r\n    };\r\n    GameBoard.prototype.CreateGameBoard = function (htmlBoard, numberOfRows, numberOfCells) {\r\n        if (numberOfRows === void 0) { numberOfRows = 1; }\r\n        if (numberOfCells === void 0) { numberOfCells = 1; }\r\n        for (var i = 0; i < numberOfRows; i++) {\r\n            var row = document.createElement(\"tr\");\r\n            for (var j = 0; j < numberOfCells; j++) {\r\n                this.AddCell(row, numberOfCells);\r\n            }\r\n            htmlBoard.appendChild(row);\r\n        }\r\n    };\r\n    GameBoard.prototype.AddCell = function (row, rowPosition, columnPosition) {\r\n        var _this = this;\r\n        if (columnPosition === void 0) { columnPosition = 1; }\r\n        var boardElement = new cell_1[\"default\"](rowPosition, columnPosition);\r\n        this.boardArray.push(boardElement);\r\n        var cell = document.createElement(\"td\");\r\n        cell.textContent = \"0\";\r\n        var functionReference = function () {\r\n            return _this.GetMove(cell, boardElement, functionReference);\r\n        };\r\n        cell.addEventListener(\"click\", functionReference);\r\n        row.appendChild(cell);\r\n    };\r\n    GameBoard.prototype.GetMove = function (cell, boardElement, functionReference) {\r\n        cell.textContent = this.players[this.currentPlayerIndex].playerSign;\r\n        boardElement.playerId = this.currentPlayerIndex;\r\n        cell.removeEventListener(\"click\", functionReference);\r\n        this.SwitchPlayer();\r\n    };\r\n    GameBoard.prototype.SwitchPlayer = function () {\r\n        if (this.currentPlayerIndex === this.players.length - 1)\r\n            this.currentPlayerIndex = 0;\r\n        else\r\n            this.currentPlayerIndex++;\r\n    };\r\n    GameBoard.prototype.CheckIfWin = function (playerId, actualCell) { };\r\n    return GameBoard;\r\n}());\r\nexports.default = GameBoard;\r\n\n\n//# sourceURL=webpack:///./src/gameBoard.ts?");
+
+/***/ }),
+
+/***/ "./src/player.ts":
+/*!***********************!*\
+  !*** ./src/player.ts ***!
+  \***********************/
 /***/ ((__unused_webpack_module, exports) => {
 
-eval("\r\nexports.__esModule = true;\r\nvar GameBoard = /** @class */ (function () {\r\n    function GameBoard(sizeX, sizeY) {\r\n        if (sizeX === void 0) { sizeX = 3; }\r\n        if (sizeY === void 0) { sizeY = sizeX; }\r\n        this.sizeX = sizeX;\r\n        this.sizeY = sizeY;\r\n    }\r\n    GameBoard.prototype.DrawGameBoard = function () {\r\n        var _this = this;\r\n        var board = document.createElement('table');\r\n        var createGameBoard = function () {\r\n            for (var i = 0; i < _this.sizeX; i++) {\r\n                var row = document.createElement('tr');\r\n                for (var j = 0; j < _this.sizeY; j++) {\r\n                    row.appendChild(document.createElement('th'));\r\n                }\r\n                board.appendChild(row);\r\n            }\r\n        };\r\n        createGameBoard();\r\n        return board;\r\n    };\r\n    return GameBoard;\r\n}());\r\nexports.default = GameBoard;\r\n\n\n//# sourceURL=webpack:///./src/gameBoard.ts?");
+eval("\r\nexports.__esModule = true;\r\nvar Player = /** @class */ (function () {\r\n    function Player(gameBoard, playerType, playerNumber) {\r\n        this.playerSignAvailable = [\"O\", \"X\"];\r\n        this.gameBoard = gameBoard;\r\n        this.playerType = playerType;\r\n        this.playerSign = this.playerSignAvailable[playerNumber];\r\n    }\r\n    return Player;\r\n}());\r\nexports.default = Player;\r\n\n\n//# sourceURL=webpack:///./src/player.ts?");
 
 /***/ })
 

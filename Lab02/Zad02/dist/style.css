@@ -1,0 +1,29 @@
+body {
+  margin: 50vh 0 0 0;
+  transform: translateY(-50%);
+  background-color: cadetblue;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+div#root {
+  display: flex;
+}
+table,
+th,
+td {
+  border: 5px solid black;
+  text-align: center;
+  border-collapse: collapse;
+}
+table {
+  width: 15vw;
+  height: 15vw;
+  background-color: bisque;
+}
+td {
+  width: 5vw;
+  font-size: 3rem;
+  cursor: pointer;
+}
