@@ -11,4 +11,7 @@ export class BattleShips implements IGame {
     div.appendChild(document.createTextNode("Hello BattleShips"));
     return div;
   }
+  DrawGameBoard(): HTMLElement {
+    return null;
+  }
 }
