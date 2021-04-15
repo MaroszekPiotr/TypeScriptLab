@@ -1,0 +1,14 @@
+table,
+th,
+td {
+  border: 5px solid black;
+  text-align: center;
+  border-collapse: collapse;
+  background-color: bisque;
+}
+td {
+  width: 5vw;
+  height: 5vw;
+  font-size: 3rem;
+  cursor: pointer;
+}
