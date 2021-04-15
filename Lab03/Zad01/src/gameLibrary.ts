@@ -1,4 +1,5 @@
 import { IGame } from "./Igame";
+import { ThemeSwitch } from "./themeSwitch";
 import { AvailableGames } from "./availableGames";
 import { GameFactory } from "./gameFactory";
 import { GameBoard as TicTacToe } from "./Games/TicTacToe/gameBoard";
@@ -12,7 +13,10 @@ export class GameLibrary {
   }
   init(): void {
     const menuContainer = <HTMLDivElement>document.createElement("div"); // kontener menu dostępnych gier
+    menuContainer.className = "menu";
+    this.AddThemeSwitcher(menuContainer);
     this.gameContainer = <HTMLDivElement>document.createElement("div"); // kontener główny ekranu z grą
+    this.gameContainer.className = "game";
     const list = <HTMLUListElement>document.createElement("ul"); // lista pozycji w menu dostępnych gier
     this.GetGames();
     this.DrawGameList(list);
@@ -20,12 +24,20 @@ export class GameLibrary {
     // zwrócić obiekt gry. Z tego obiektu można następnie pobrać nazwę gry i dodać do menu oraz metodę zwracającą
     // samą grę i po kliknięciu w wybrany element listy wywoływać ją, aby doklejać zawartość do gameContainer.
     // Aby wyświetlić menu należy napisać pętlę, któta przeiteruje po wszystkich wartościach enum'a
-
     menuContainer.appendChild(list);
     document.body.appendChild(menuContainer);
     document.body.appendChild(this.gameContainer);
   }
 
+  private AddThemeSwitcher(appendChildNode: HTMLDivElement) {
+    const themeSwitchBtn: HTMLButtonElement = document.createElement("button");
+    themeSwitchBtn.textContent = "switch Theme";
+    const themeSwitcher = new ThemeSwitch();
+    themeSwitcher.AddButton(themeSwitchBtn);
+    const themes = ["dark", "light"];
+    themeSwitcher.AddThemes(themes);
+    appendChildNode.appendChild(themeSwitchBtn);
+  }
   private GetGames(): void {
     const gameFactory = new GameFactory();
     for (let game in AvailableGames) {
