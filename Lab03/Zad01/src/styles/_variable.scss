@@ -2,16 +2,16 @@
 $fistColor: black;
 $secondColor: white;
 
-[data-them="dark"] {
+[data-theme="dark"] {
   --primaryColor: #222831;
   --secondaryColor: #393e46;
   --tertiaryColor: #00adb5;
   --quaternaryColor: #eeeeee;
 }
 
-[data-them="light"] {
+[data-theme="light"] {
   --primaryColor: #eaeaea;
   --secondaryColor: #ff2e63;
-  --tertiaryColor: #252a34;
-  --quaternaryColor: #08d9d6;
+  --tertiaryColor: #08d9d6;
+  --quaternaryColor: #252a34;
 }

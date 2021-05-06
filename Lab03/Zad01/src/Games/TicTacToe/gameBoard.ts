@@ -21,12 +21,14 @@ export class GameBoard implements IGame {
     this.moveNumber = 0;
   }
   getGameElement(): HTMLElement {
-    const div = document.createElement("div");
+    const div = <HTMLDivElement>document.createElement("div");
     div.appendChild(document.createTextNode("Hello TicTacToe"));
     return div;
   }
   DrawGameBoard(): HTMLTableElement {
-    const htmlBoard: HTMLTableElement = document.createElement("table");
+    const htmlBoard: HTMLTableElement = <HTMLTableElement>(
+      document.createElement("table")
+    );
     htmlBoard.className = "GameBoard";
     this.CreateGameBoard(htmlBoard, this.sizeX, this.sizeY);
     return htmlBoard;
@@ -37,7 +39,9 @@ export class GameBoard implements IGame {
     numberOfCells: number = 1
   ): void {
     for (let i = 0; i < numberOfRows; i++) {
-      const row: HTMLElement = document.createElement("tr");
+      const row: HTMLTableRowElement = <HTMLTableRowElement>(
+        document.createElement("tr")
+      );
       for (let j = 0; j < numberOfCells; j++) {
         this.AddCell(row, i, j);
       }
@@ -51,7 +55,9 @@ export class GameBoard implements IGame {
   ): void {
     const boardElement = new Cell(rowPosition, columnPosition);
     this.boardArray.push(boardElement);
-    const cell: HTMLTableCellElement = document.createElement("td");
+    const cell: HTMLTableCellElement = <HTMLTableDataCellElement>(
+      document.createElement("td")
+    );
     cell.textContent = "";
     const functionReference = () =>
       this.GetMove(cell, boardElement, functionReference);

@@ -1,4 +1,8 @@
+import { Guid } from "../../helpers/guid";
+
 export default class Cell {
+  //dodać guid
+  id: Guid;
   playerId: number;
   cellValue: "" | "X" | "O";
   positionX: number;
@@ -7,6 +11,7 @@ export default class Cell {
     this.cellValue = "";
     this.positionX = positionX;
     this.positionY = positionY;
+    this.id = Guid.newGuid();
   }
   printCell() {
     let value: SVGElement;

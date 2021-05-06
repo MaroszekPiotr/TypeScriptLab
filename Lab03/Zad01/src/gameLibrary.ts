@@ -20,10 +20,6 @@ export class GameLibrary {
     const list = <HTMLUListElement>document.createElement("ul"); // lista pozycji w menu dostępnych gier
     this.GetGames();
     this.DrawGameList(list);
-    // TODO: Zaimplementuj wzorzec fabryki/metody fabrykującej, tak aby na podstawie konkretnej wartości z enum
-    // zwrócić obiekt gry. Z tego obiektu można następnie pobrać nazwę gry i dodać do menu oraz metodę zwracającą
-    // samą grę i po kliknięciu w wybrany element listy wywoływać ją, aby doklejać zawartość do gameContainer.
-    // Aby wyświetlić menu należy napisać pętlę, któta przeiteruje po wszystkich wartościach enum'a
     menuContainer.appendChild(list);
     document.body.appendChild(menuContainer);
     document.body.appendChild(this.gameContainer);
@@ -36,6 +32,7 @@ export class GameLibrary {
     themeSwitcher.AddButton(themeSwitchBtn);
     const themes = ["dark", "light"];
     themeSwitcher.AddThemes(themes);
+    themeSwitcher.Init();
     appendChildNode.appendChild(themeSwitchBtn);
   }
   private GetGames(): void {

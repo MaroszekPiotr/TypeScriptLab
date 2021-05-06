@@ -16,6 +16,9 @@ export class ThemeSwitch {
   AddThemes(themesArray: string[]): void {
     this.themes = [...this.themes, ...themesArray];
   }
+  Init() {
+    this.ChangeTheme(0);
+  }
   private NextTheme(): void {
     if (this.actualTheme >= this.themes.length - 1) this.actualTheme = 0;
     else this.actualTheme++;

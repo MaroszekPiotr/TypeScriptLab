@@ -1,10 +1,11 @@
 @import "../Games/TicTacToe/styles/styles.scss";
 @import "variable";
 @import "./mixins";
-// $body-color: red;
-// body {
-//   color: $body-color;
-// }
+$body-color: var(--primaryColor);
+body {
+  color: var(--quaternaryColor);
+  background-color: var(--primaryColor);
+}
 // div#root {
 //   display: flex;
 // }
