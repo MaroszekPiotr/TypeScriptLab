@@ -1,7 +1,7 @@
 import Cell from "./cell";
 import Player from "./player";
 import { IGame } from "../../Igame";
-export class GameBoard implements IGame {
+export class TicTacToe implements IGame {
   name: string;
   sizeX: number;
   sizeY: number;
@@ -20,20 +20,15 @@ export class GameBoard implements IGame {
     this.lenghtRouteToWin = 3;
     this.moveNumber = 0;
   }
-  getGameElement(): HTMLElement {
-    const div = <HTMLDivElement>document.createElement("div");
-    div.appendChild(document.createTextNode("Hello TicTacToe"));
-    return div;
-  }
-  DrawGameBoard(): HTMLTableElement {
+  getGameElement(): HTMLTableElement {
     const htmlBoard: HTMLTableElement = <HTMLTableElement>(
       document.createElement("table")
     );
     htmlBoard.className = "GameBoard";
-    this.CreateGameBoard(htmlBoard, this.sizeX, this.sizeY);
+    this.createGameBoard(htmlBoard, this.sizeX, this.sizeY);
     return htmlBoard;
   }
-  private CreateGameBoard(
+  private createGameBoard(
     htmlBoard: HTMLTableElement,
     numberOfRows: number = 1,
     numberOfCells: number = 1
@@ -43,12 +38,12 @@ export class GameBoard implements IGame {
         document.createElement("tr")
       );
       for (let j = 0; j < numberOfCells; j++) {
-        this.AddCell(row, i, j);
+        this.addCell(row, i, j);
       }
       htmlBoard.appendChild(row);
     }
   }
-  private AddCell(
+  private addCell(
     row: HTMLElement,
     rowPosition: number,
     columnPosition: number = 1
@@ -60,11 +55,11 @@ export class GameBoard implements IGame {
     );
     cell.textContent = "";
     const functionReference = () =>
-      this.GetMove(cell, boardElement, functionReference);
+      this.getMove(cell, boardElement, functionReference);
     cell.addEventListener("click", functionReference);
     row.appendChild(cell);
   }
-  private GetMove(
+  private getMove(
     cell: HTMLTableCellElement,
     boardElement: Cell,
     functionReference
@@ -73,16 +68,16 @@ export class GameBoard implements IGame {
     boardElement.playerId = this.currentPlayerIndex;
     this.moveNumber++;
     cell.removeEventListener("click", functionReference);
-    if (this.CheckIfWin(this.currentPlayerIndex, boardElement))
+    if (this.checkIfWin(this.currentPlayerIndex, boardElement))
       console.log("wygrana");
-    this.SwitchPlayer();
+    this.switchPlayer();
   }
-  private SwitchPlayer(): void {
+  private switchPlayer(): void {
     if (this.currentPlayerIndex === this.players.length - 1)
       this.currentPlayerIndex = 0;
     else this.currentPlayerIndex++;
   }
-  private CheckIfWin(playerId: number, actualCell: Cell): boolean {
+  private checkIfWin(playerId: number, actualCell: Cell): boolean {
     if (this.moveNumber >= this.lenghtRouteToWin * this.players.length - 1) {
       const playerPositions: Cell[] = this.boardArray.filter(
         (cell) => cell.playerId === playerId

@@ -1,15 +1,24 @@
 import { AvailableGames } from "./availableGames";
-import { GameBoard as TicTacToe } from "./Games/TicTacToe/gameBoard";
-import { BattleShips } from "./Games/Battleships/battleships";
+import { TicTacToe } from "./Games/ticTacToe/ticTacToe";
+import { BattleShips } from "./Games/battleships/battleships";
+import { Chess } from "./Games/chess/chess";
+import { CyberSkin2084 } from "./Games/cyberskin2084/cyberskin2084";
+import { Miner } from "./Games/miner/miner";
 import { IGame } from "./Igame";
 
 export class GameFactory {
-  GameCreator(gameName: string): IGame {
+  gameCreator(gameName: AvailableGames): IGame {
     switch (gameName) {
-      case "TicTacToe":
+      case AvailableGames.TicTacToe:
         return new TicTacToe();
-      case "BattleShips":
+      case AvailableGames.BattleShips:
         return new BattleShips();
+      case AvailableGames.Chess:
+        return new Chess();
+      case AvailableGames.CyberSkin2084:
+        return new CyberSkin2084();
+      case AvailableGames.Miner:
+        return new Miner();
       default:
         console.error("nie ma takiej gry");
     }

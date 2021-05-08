@@ -7,29 +7,29 @@ export class ThemeSwitch {
     this.actualTheme = 0;
     this.destHTMLElement = destHTMLElement;
   }
-  AddButton(destBtnElem: HTMLElement, themeNumber?: number): void {
-    destBtnElem.addEventListener("click", () => this.ChangeTheme(themeNumber));
+  addButton(destBtnElem: HTMLElement, themeNumber?: number): void {
+    destBtnElem.addEventListener("click", () => this.changeTheme(themeNumber));
   }
-  AddTheme(themeName: string): void {
+  addTheme(themeName: string): void {
     this.themes.push(themeName);
   }
-  AddThemes(themesArray: string[]): void {
+  addThemes(themesArray: string[]): void {
     this.themes = [...this.themes, ...themesArray];
   }
-  Init() {
-    this.ChangeTheme(0);
+  init() {
+    this.changeTheme(0);
   }
-  private NextTheme(): void {
+  private nextTheme(): void {
     if (this.actualTheme >= this.themes.length - 1) this.actualTheme = 0;
     else this.actualTheme++;
   }
-  private SetThemNumber(themeNumber: number) {
+  private setThemNumber(themeNumber: number) {
     if (themeNumber < 0 || themeNumber >= this.themes.length) return;
     this.actualTheme = themeNumber;
   }
-  private ChangeTheme(themeNumber?: number): void {
+  private changeTheme(themeNumber?: number): void {
     if (this.themes.length === 0) return;
-    themeNumber != null ? this.SetThemNumber(themeNumber) : this.NextTheme();
+    themeNumber != null ? this.setThemNumber(themeNumber) : this.nextTheme();
     this.destHTMLElement.setAttribute(
       "data-theme",
       this.themes[this.actualTheme]

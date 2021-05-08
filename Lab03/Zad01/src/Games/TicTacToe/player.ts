@@ -1,12 +1,12 @@
-import { GameBoard } from "./gameBoard";
+import { TicTacToe } from "./ticTacToe";
 
 export default class Player {
   playerType: "Human" | "Computer";
   playerSignAvailable: string[] = ["O", "X"];
   playerSign: string;
-  gameBoard: GameBoard;
+  gameBoard: TicTacToe;
   constructor(
-    gameBoard: GameBoard,
+    gameBoard: TicTacToe,
     playerType: "Human" | "Computer",
     playerNumber: number
   ) {
