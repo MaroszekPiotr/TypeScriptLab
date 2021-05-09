@@ -11,6 +11,9 @@ export class TicTacToe implements IGame {
   lenghtRouteToWin: number;
   boardArray: Cell[];
   moveNumber: number;
+  gameBoardContainer: HTMLDivElement;
+  gameInfoBoxContainer: HTMLDivElement;
+  isGameEnd: boolean = false;
   constructor(sizeX: number = 3, sizeY: number = sizeX) {
     this.name = "Kółko i krzyżyk";
     this.sizeX = sizeX;

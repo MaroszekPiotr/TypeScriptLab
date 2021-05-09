@@ -5,8 +5,13 @@ export default class GameBoard {
   game: TicTacToe;
   constructor(game: TicTacToe) {
     this.game = game;
+    this.createGameBoard(this.game.gameBoardContainer);
   }
   createGameBoard(gameBoardContainer: HTMLDivElement): void {
+    this.game.gameBoardContainer.textContent = "";
+    this.game.gameInfoBoxContainer.textContent = "";
+    this.game.isGameEnd = false;
+    this.game.boardArray.length = 0;
     const gameBoardTable: HTMLTableElement = <HTMLTableElement>(
       document.createElement("table")
     );
@@ -32,9 +37,8 @@ export default class GameBoard {
       document.createElement("td")
     );
     cell.textContent = "";
-    const functionReference = () =>
-      this.getMove(cell, boardElement, functionReference);
-    cell.addEventListener("click", functionReference);
+    const nextMoveRef = () => this.getMove(cell, boardElement, nextMoveRef);
+    cell.addEventListener("click", nextMoveRef);
     row.appendChild(cell);
   }
   private getMove(
@@ -42,14 +46,19 @@ export default class GameBoard {
     boardElement: Cell,
     functionReference
   ): void {
+    if (this.game.isGameEnd === true) return;
     cell.textContent = this.game.players[
       this.game.currentPlayerIndex
     ].playerSign;
     boardElement.playerId = this.game.currentPlayerIndex;
     this.game.moveNumber++;
     cell.removeEventListener("click", functionReference);
-    if (this.checkIfWin(this.game.currentPlayerIndex, boardElement))
-      console.log("wygrana");
+    if (this.checkIfWin(this.game.currentPlayerIndex, boardElement)) {
+      this.game.gameInfoBoxContainer.textContent = `Player "${
+        this.game.players[this.game.currentPlayerIndex].playerSign
+      }" wins!`;
+      this.game.isGameEnd = true;
+    }
     this.switchPlayer();
   }
   private switchPlayer(): void {

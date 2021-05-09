@@ -39,17 +39,22 @@ export default class TicTacToeUI {
   }
 
   private createGameMenuContainer(gamePanel: HTMLDivElement): void {
-    const menuCreator = new GameMenu();
+    const menuCreator = new GameMenu(this.game);
     const temp = menuCreator.menuInit();
     gamePanel.appendChild(temp);
   }
 
-  private createGameInfoBoxContainer(gamePanel: HTMLDivElement): void {}
+  private createGameInfoBoxContainer(gamePanel: HTMLDivElement): void {
+    const gameInfoBoxContainer = <HTMLDivElement>document.createElement("div");
+    gameInfoBoxContainer.className = "gameInfoBox";
+    this.game.gameInfoBoxContainer = gameInfoBoxContainer;
+    gamePanel.appendChild(gameInfoBoxContainer);
+  }
 
   private createGameBoardContainer(gamePanel: HTMLDivElement): void {
     const gameBoardContainer = <HTMLDivElement>document.createElement("div");
     gameBoardContainer.className = "gameBoard";
-    // this.createGameBoard(gameBoardContainer);
+    this.game.gameBoardContainer = gameBoardContainer;
     gamePanel.appendChild(gameBoardContainer);
   }
 }

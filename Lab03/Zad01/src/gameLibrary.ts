@@ -21,7 +21,7 @@ export class GameLibrary {
   private gameListContainerBuilder(applicationRoot: HTMLDivElement) {
     const gameListContainer = <HTMLDivElement>document.createElement("div"); // kontener menu dostępnych gier
     gameListContainer.className = "gameList";
-    gameListContainer.textContent = "Lista gier:";
+    gameListContainer.textContent = "games library:";
     this.addThemeSwitcher(gameListContainer);
     this.getGames();
     const list = <HTMLUListElement>document.createElement("ul"); // lista pozycji w menu dostępnych gier
