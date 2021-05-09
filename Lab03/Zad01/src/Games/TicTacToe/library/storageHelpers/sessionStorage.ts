@@ -1,5 +1,5 @@
-import { Guid } from "../../../helpers/guid";
-import Cell from "../cell";
+import { Guid } from "../../../../helpers/guid";
+import Cell from "../gameLogic/cell";
 
 export class SessionStorageStore {
   keyName: string;

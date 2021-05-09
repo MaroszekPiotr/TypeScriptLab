@@ -1,4 +1,4 @@
-import { Guid } from "../../helpers/guid";
+import { Guid } from "../../../../helpers/guid";
 
 export default class Cell {
   //dodać guid
