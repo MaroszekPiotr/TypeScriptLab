@@ -1,5 +1,7 @@
 import { TicTacToe } from "../../ticTacToe";
 import Cell from "./cell";
+import { IGameSave } from "./IGameSave";
+import { IGameState } from "./IGameState";
 
 export default class Move {
   game: TicTacToe;
@@ -17,7 +19,8 @@ export default class Move {
       "click",
       boardElement.nextMoveRef
     );
-    this.game.moveHistory.addToStorage(boardElement);
+    this.game.sessionMoveHistory.addToStorage(boardElement);
+    // this.game.saveGame.addToStorage(this.saveGame(boardElement));
     if (this.checkIfWin(this.game.currentPlayerIndex, boardElement)) {
       this.game.gameInfoBoxContainer.textContent = `Player "${
         this.game.players[this.game.currentPlayerIndex].playerSign
@@ -32,6 +35,16 @@ export default class Move {
       this.game.currentPlayerIndex = 0;
     else this.game.currentPlayerIndex++;
   }
+
+  // private saveGame(boardElement: Cell): IGameSave {
+  //   this.game.gameHistory.push(boardElement);
+  //   const game = {
+  //     gameID: this.game.gameID,
+  //     gameSize: this.game.sizeX,
+  //     gameState: this.game.gameHistory,
+  //   };
+  //   return game;
+  // }
 
   checkIfWin(playerId: number, actualCell: Cell): boolean {
     if (

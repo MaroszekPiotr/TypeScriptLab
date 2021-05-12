@@ -1,22 +1,26 @@
-import { Guid } from "../../../../helpers/guid";
-import { TicTacToe } from "../../ticTacToe";
-import Cell from "../gameLogic/cell";
+import { IGameSave } from "../gameLogic/IGameSave";
 
 export class LocalStorageStore {
   keyName: string;
-  storageInformation: TicTacToe[]; //moveHistory
+  storageInformation: IGameSave[]; //moveHistory
   constructor(keyName) {
     this.keyName = keyName;
   }
-  addToStorage(gameState: TicTacToe) {
+  addToStorage(gameState: IGameSave) {
     if (this.storageInformation === undefined) this.storageInformation = [];
-    this.getFromStore();
-    this.storageInformation.push(gameState);
+    const gameSlotIndex = this.storageInformation.findIndex(
+      (slot) => slot.gameID === gameState.gameID
+    );
+    if (gameSlotIndex < 0) {
+      this.storageInformation.push(gameState);
+    } else {
+      this.storageInformation[gameSlotIndex] = gameState;
+    }
     this.saveStore(this.storageInformation);
   }
-  getFromStore(): Cell[] {
+  getFromStore(): IGameSave[] {
     let storageInformation = <string>localStorage.getItem(this.keyName);
-    return <Cell[]>JSON.parse(storageInformation);
+    return <IGameSave[]>JSON.parse(storageInformation);
   }
   // deleteInStorage(id: Guid) {
   //   this.getFromStore();
@@ -31,7 +35,7 @@ export class LocalStorageStore {
   //   this.saveStore(updatedStorage);
   //   this.getFromStore();
   // }
-  private saveStore(storageInformation: TicTacToe[]) {
+  private saveStore(storageInformation: IGameSave[]) {
     localStorage.setItem(this.keyName, JSON.stringify(storageInformation));
   }
 }

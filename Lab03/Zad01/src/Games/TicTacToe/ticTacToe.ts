@@ -4,20 +4,24 @@ import { IGame } from "../../Igame";
 import TicTacToeUI from "./library/userInterface/ticTacToeUI";
 import { SessionStorageStore } from "./library/storageHelpers/sessionStorage";
 import { LocalStorageStore } from "./library/storageHelpers/localStorage";
+import { Guid } from "../../helpers/guid";
+import { IGameState } from "./library/gameLogic/IGameState";
 export class TicTacToe implements IGame {
-  name: string;
-  sizeX: number;
-  sizeY: number;
-  players: Player[];
-  currentPlayerIndex: number;
-  lenghtRouteToWin: number;
   boardArray: Cell[];
-  moveNumber: number;
-  moveHistory: SessionStorageStore;
-  saveGame: LocalStorageStore;
+  currentPlayerIndex: number;
   gameBoardContainer: HTMLDivElement;
+  // gameID: Guid = null; //to nie może tu być
   gameInfoBoxContainer: HTMLDivElement;
   isGameEnd: boolean = false;
+  lenghtRouteToWin: number;
+  // gameHistory: IGameState[] = []; to nie może tu być
+  moveNumber: number;
+  name: string;
+  players: Player[];
+  saveGame: LocalStorageStore;
+  sessionMoveHistory: SessionStorageStore;
+  sizeX: number;
+  sizeY: number;
   winner: Player = null;
   constructor(sizeX: number = 3, sizeY: number = sizeX) {
     this.name = "Kółko i krzyżyk";
@@ -31,7 +35,7 @@ export class TicTacToe implements IGame {
     this.currentPlayerIndex = 0;
     this.lenghtRouteToWin = 3;
     this.moveNumber = 0;
-    this.moveHistory = new SessionStorageStore("moveHistory");
+    this.sessionMoveHistory = new SessionStorageStore("moveHistory");
     this.saveGame = new LocalStorageStore("gameSaves");
   }
   getGameElement(): HTMLDivElement {

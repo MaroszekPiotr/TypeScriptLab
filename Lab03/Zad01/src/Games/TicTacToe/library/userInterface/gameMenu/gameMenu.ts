@@ -78,7 +78,8 @@ export default class GameMenu {
   }
 
   private prevTurn(stepBefore: number = 1) {
-    const gameSave: Cell[] = this.game.moveHistory.getFromStore();
+    const gameSave: Cell[] = this.game.sessionMoveHistory.getFromStore();
+    if (gameSave.length < 1) return;
     const gameLength = gameSave.length - stepBefore;
     const gameToLoad = gameSave.slice(0, gameLength);
     new GameBoard(this.game).loadGameState(gameToLoad);

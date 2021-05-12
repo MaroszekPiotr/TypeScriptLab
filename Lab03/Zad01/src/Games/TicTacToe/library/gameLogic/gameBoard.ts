@@ -8,20 +8,19 @@ import Move from "./move";
 export default class GameBoard {
   game: TicTacToe;
   move: Move;
-  gameID: Guid;
+  gameHistory: Cell[] = [];
   constructor(game: TicTacToe) {
     this.game = game;
     this.createGameBoard(this.game.gameBoardContainer);
     this.move = new Move(this.game);
-    this.gameID = null;
   }
   createGameBoard(gameBoardContainer: HTMLDivElement): void {
-    if (this.gameID === null) Guid.newGuid();
+    // if (this.game.gameID === null) this.game.gameID = Guid.newGuid();
     this.game.gameBoardContainer.textContent = "";
     this.game.gameInfoBoxContainer.textContent = "";
     this.game.isGameEnd = false;
     this.game.boardArray.length = 0;
-    this.game.moveHistory.deleteStorage();
+    this.game.sessionMoveHistory.deleteStorage();
     const gameBoardTable: HTMLTableElement = <HTMLTableElement>(
       document.createElement("table")
     );
