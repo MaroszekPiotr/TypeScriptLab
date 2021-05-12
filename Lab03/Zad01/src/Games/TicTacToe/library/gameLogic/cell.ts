@@ -1,19 +1,16 @@
 import { Guid } from "../../../../helpers/guid";
+import { IGameState } from "./IGameState";
 
-export default class Cell {
-  //dodać guid
+export default class Cell implements IGameState {
   id: Guid;
   playerId: number;
-  cellValue: "" | "X" | "O";
   positionX: number;
   positionY: number;
+  nextMoveRef: any;
+  tableCellRef: HTMLTableCellElement;
   constructor(positionX: number, positionY: number) {
-    this.cellValue = "";
     this.positionX = positionX;
     this.positionY = positionY;
     this.id = Guid.newGuid();
-  }
-  printCell() {
-    let value: SVGElement;
   }
 }

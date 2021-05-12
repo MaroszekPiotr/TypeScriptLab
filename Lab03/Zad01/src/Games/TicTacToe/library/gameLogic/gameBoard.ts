@@ -1,17 +1,27 @@
+import { Guid } from "../../../../helpers/guid";
 import { TicTacToe } from "../../ticTacToe";
+import { SessionStorageStore } from "../storageHelpers/sessionStorage";
 import Cell from "./cell";
+import { IGameState } from "./IGameState";
+import Move from "./move";
 
 export default class GameBoard {
   game: TicTacToe;
+  move: Move;
+  gameID: Guid;
   constructor(game: TicTacToe) {
     this.game = game;
     this.createGameBoard(this.game.gameBoardContainer);
+    this.move = new Move(this.game);
+    this.gameID = null;
   }
   createGameBoard(gameBoardContainer: HTMLDivElement): void {
+    if (this.gameID === null) Guid.newGuid();
     this.game.gameBoardContainer.textContent = "";
     this.game.gameInfoBoxContainer.textContent = "";
     this.game.isGameEnd = false;
     this.game.boardArray.length = 0;
+    this.game.moveHistory.deleteStorage();
     const gameBoardTable: HTMLTableElement = <HTMLTableElement>(
       document.createElement("table")
     );
@@ -36,138 +46,24 @@ export default class GameBoard {
     const cell: HTMLTableCellElement = <HTMLTableDataCellElement>(
       document.createElement("td")
     );
-    cell.textContent = "";
-    const nextMoveRef = () => this.getMove(cell, boardElement, nextMoveRef);
+    const nextMoveRef = () => this.move.getMove(boardElement);
+    boardElement.nextMoveRef = nextMoveRef;
+    boardElement.tableCellRef = cell;
+    boardElement.tableCellRef.textContent = "";
     cell.addEventListener("click", nextMoveRef);
     row.appendChild(cell);
   }
-  private getMove(
-    cell: HTMLTableCellElement,
-    boardElement: Cell,
-    functionReference
-  ): void {
-    if (this.game.isGameEnd === true) return;
-    cell.textContent = this.game.players[
-      this.game.currentPlayerIndex
-    ].playerSign;
-    boardElement.playerId = this.game.currentPlayerIndex;
-    this.game.moveNumber++;
-    cell.removeEventListener("click", functionReference);
-    if (this.checkIfWin(this.game.currentPlayerIndex, boardElement)) {
-      this.game.gameInfoBoxContainer.textContent = `Player "${
-        this.game.players[this.game.currentPlayerIndex].playerSign
-      }" wins!`;
-      this.game.isGameEnd = true;
-    }
-    this.switchPlayer();
-  }
-  private switchPlayer(): void {
-    if (this.game.currentPlayerIndex === this.game.players.length - 1)
-      this.game.currentPlayerIndex = 0;
-    else this.game.currentPlayerIndex++;
-  }
-  private checkIfWin(playerId: number, actualCell: Cell): boolean {
-    if (
-      this.game.moveNumber >=
-      this.game.lenghtRouteToWin * this.game.players.length - 1
-    ) {
-      const playerPositions: Cell[] = this.game.boardArray.filter(
-        (cell) => cell.playerId === playerId
-      );
-      if (this.checkVertical(actualCell, playerPositions)) return true;
-      if (this.checkHorizontal(actualCell, playerPositions)) return true;
-      if (this.checkDiagonalLeft(actualCell, playerPositions)) return true;
-      if (this.checkDiagonalRight(actualCell, playerPositions)) return true;
-    }
-    return false;
-  }
 
-  private checkVertical(actualCell: Cell, playerPositions: Cell[]): boolean {
-    let counter = 1;
-    let i: number;
-    const checkCondition = () =>
-      playerPositions.findIndex(
-        (position) =>
-          position.positionY === actualCell.positionY &&
-          position.positionX === i
+  loadGameState(gameStore: IGameState[]) {
+    this.createGameBoard(this.game.gameBoardContainer);
+    this.game.currentPlayerIndex = 0;
+    gameStore.map((turn) => {
+      const actualCell: Cell = this.game.boardArray.find(
+        (element) =>
+          element.positionX === turn.positionX &&
+          element.positionY === turn.positionY
       );
-    for (i = actualCell.positionX - 1; i >= 0; i--) {
-      if (checkCondition() >= 0) counter++;
-      else break;
-    }
-    for (i = actualCell.positionX + 1; i >= 0; i++) {
-      if (checkCondition() >= 0) counter++;
-      else break;
-    }
-    if (counter >= this.game.lenghtRouteToWin) return true;
-    return false;
-  }
-  private checkHorizontal(actualCell: Cell, playerPositions: Cell[]): boolean {
-    let counter = 1;
-    let i: number;
-    const checkCondition = () =>
-      playerPositions.findIndex(
-        (position) =>
-          position.positionX === actualCell.positionX &&
-          position.positionY === i
-      );
-    for (i = actualCell.positionY - 1; i >= 0; i--) {
-      if (checkCondition() >= 0) counter++;
-      else break;
-    }
-    for (i = actualCell.positionY + 1; i >= 0; i++) {
-      if (checkCondition() >= 0) counter++;
-      else break;
-    }
-    if (counter >= this.game.lenghtRouteToWin) return true;
-    return false;
-  }
-  private checkDiagonalLeft(
-    actualCell: Cell,
-    playerPositions: Cell[]
-  ): boolean {
-    let counter = 1;
-    let i: number;
-    let j: number;
-    const checkCondition = () =>
-      playerPositions.findIndex(
-        (position) => position.positionX === i && position.positionY === j
-      );
-    // prettier-ignore
-    for (i = actualCell.positionX - 1, j = actualCell.positionY - 1; i >= 0; i--, j--) {
-      if (checkCondition() >= 0) counter++;
-      else break;
-    }
-    // prettier-ignore
-    for (i = actualCell.positionX + 1, j = actualCell.positionY + 1; i >= 0; i++, j++) {
-      if (checkCondition() >= 0) counter++;
-      else break;
-    }
-    if (counter >= this.game.lenghtRouteToWin) return true;
-    return false;
-  }
-  private checkDiagonalRight(
-    actualCell: Cell,
-    playerPositions: Cell[]
-  ): boolean {
-    let counter = 1;
-    let i: number;
-    let j: number;
-    const checkCondition = () =>
-      playerPositions.findIndex(
-        (position) => position.positionX === i && position.positionY === j
-      );
-    // prettier-ignore
-    for (i = actualCell.positionX + 1, j = actualCell.positionY - 1; j >= 0; i++, j--) {
-      if (checkCondition() >= 0) counter++;
-      else break;
-    }
-    // prettier-ignore
-    for (i = actualCell.positionX - 1, j = actualCell.positionY + 1; i >= 0;i--, j++) {
-      if (checkCondition() >= 0) counter++;
-      else break;
-    }
-    if (counter >= this.game.lenghtRouteToWin) return true;
-    return false;
+      this.move.getMove(actualCell);
+    });
   }
 }

@@ -1,5 +1,8 @@
 import { TicTacToe } from "../../../ticTacToe";
+import Cell from "../../gameLogic/cell";
 import GameBoard from "../../gameLogic/gameBoard";
+import { IGameState } from "../../gameLogic/IGameState";
+import { SessionStorageStore } from "../../storageHelpers/sessionStorage";
 
 export default class GameMenu {
   game: TicTacToe;
@@ -43,6 +46,7 @@ export default class GameMenu {
     label.textContent = "get turn back";
     const btn = <HTMLButtonElement>document.createElement("button");
     btn.textContent = "previous";
+    btn.addEventListener("click", () => this.prevTurn());
     label.appendChild(btn);
     menuNode.appendChild(label);
   }
@@ -71,5 +75,12 @@ export default class GameMenu {
   }
   private setNewGame() {
     new GameBoard(this.game);
+  }
+
+  private prevTurn(stepBefore: number = 1) {
+    const gameSave: Cell[] = this.game.moveHistory.getFromStore();
+    const gameLength = gameSave.length - stepBefore;
+    const gameToLoad = gameSave.slice(0, gameLength);
+    new GameBoard(this.game).loadGameState(gameToLoad);
   }
 }

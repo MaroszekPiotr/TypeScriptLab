@@ -7,18 +7,18 @@ export class SessionStorageStore {
   constructor(keyName) {
     this.keyName = keyName;
   }
-  AddToStorage(gameState: Cell) {
+  addToStorage(gameState: Cell) {
     if (this.storageInformation === undefined) this.storageInformation = [];
-    this.GetFromStore();
+    this.getFromStore();
     this.storageInformation.push(gameState);
-    this.SaveStore(this.storageInformation);
+    this.saveStore(this.storageInformation);
   }
-  GetFromStore(): Cell[] {
+  getFromStore(): Cell[] {
     let storageInformation = <string>sessionStorage.getItem(this.keyName);
     return <Cell[]>JSON.parse(storageInformation);
   }
-  DeleteInStorage(id: Guid) {
-    this.GetFromStore();
+  deleteInStorage(id: Guid) {
+    this.getFromStore();
     if (
       this.storageInformation === null ||
       this.storageInformation === undefined
@@ -27,10 +27,17 @@ export class SessionStorageStore {
     const updatedStorage = this.storageInformation.filter(
       (item) => item.id != id
     );
-    this.SaveStore(updatedStorage);
-    this.GetFromStore();
+    this.saveStore(updatedStorage);
+    this.getFromStore();
   }
-  private SaveStore(storageInformation: Cell[]) {
+
+  deleteStorage() {
+    this.storageInformation = [];
+    this.saveStore(this.storageInformation);
+    this.getFromStore();
+  }
+
+  private saveStore(storageInformation: Cell[]) {
     sessionStorage.setItem(this.keyName, JSON.stringify(storageInformation));
   }
 }
