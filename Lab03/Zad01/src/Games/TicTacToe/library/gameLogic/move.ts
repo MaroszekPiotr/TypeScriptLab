@@ -1,12 +1,17 @@
+import { Guid } from "../../../../helpers/guid";
 import { TicTacToe } from "../../ticTacToe";
 import Cell from "./cell";
+import GameBoard from "./gameBoard";
 import { IGameSave } from "./IGameSave";
+import { IGameMoveHistory } from "./IGameMoveHistory";
 import { IGameState } from "./IGameState";
 
 export default class Move {
   game: TicTacToe;
-  constructor(game: TicTacToe) {
-    this.game = game;
+  gameBoard: GameBoard;
+  constructor(gameBoard: GameBoard) {
+    this.game = gameBoard.game;
+    this.gameBoard = gameBoard;
   }
 
   getMove(boardElement: Cell): void {
@@ -19,8 +24,10 @@ export default class Move {
       "click",
       boardElement.nextMoveRef
     );
-    this.game.sessionMoveHistory.addToStorage(boardElement);
-    // this.game.saveGame.addToStorage(this.saveGame(boardElement));
+    this.gameBoard.gameHistory.push(boardElement);
+    // this.game.sessionMoveHistory.addToStorage(boardElement);
+    this.game.sessionMoveHistory.addToStorage(this.saveState(boardElement));
+    this.game.saveGame.addToStorage(this.saveGame(boardElement));
     if (this.checkIfWin(this.game.currentPlayerIndex, boardElement)) {
       this.game.gameInfoBoxContainer.textContent = `Player "${
         this.game.players[this.game.currentPlayerIndex].playerSign
@@ -36,15 +43,22 @@ export default class Move {
     else this.game.currentPlayerIndex++;
   }
 
-  // private saveGame(boardElement: Cell): IGameSave {
-  //   this.game.gameHistory.push(boardElement);
-  //   const game = {
-  //     gameID: this.game.gameID,
-  //     gameSize: this.game.sizeX,
-  //     gameState: this.game.gameHistory,
-  //   };
-  //   return game;
-  // }
+  private saveState(boardElement: Cell): IGameState {
+    const game = {
+      gameID: this.gameBoard.gameID,
+      gameState: this.gameBoard.gameHistory,
+    };
+    return game;
+  }
+
+  private saveGame(boardElement: Cell): IGameSave {
+    const game = {
+      gameID: this.gameBoard.gameID,
+      gameSize: this.game.sizeX,
+      gameState: this.gameBoard.gameHistory,
+    };
+    return game;
+  }
 
   checkIfWin(playerId: number, actualCell: Cell): boolean {
     if (

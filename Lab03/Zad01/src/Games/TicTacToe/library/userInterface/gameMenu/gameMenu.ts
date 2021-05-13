@@ -1,6 +1,7 @@
 import { TicTacToe } from "../../../ticTacToe";
 import Cell from "../../gameLogic/cell";
 import GameBoard from "../../gameLogic/gameBoard";
+import { IGameMoveHistory } from "../../gameLogic/IGameMoveHistory";
 import { IGameState } from "../../gameLogic/IGameState";
 import { SessionStorageStore } from "../../storageHelpers/sessionStorage";
 
@@ -78,10 +79,13 @@ export default class GameMenu {
   }
 
   private prevTurn(stepBefore: number = 1) {
-    const gameSave: Cell[] = this.game.sessionMoveHistory.getFromStore();
+    const gameSession: IGameState = this.game.sessionMoveHistory.getFromStore();
+    if (gameSession === null || gameSession === undefined) return;
+    const gameSave: IGameMoveHistory[] = gameSession.gameState;
+    const gameID = gameSession.gameID;
     if (gameSave.length < 1) return;
     const gameLength = gameSave.length - stepBefore;
     const gameToLoad = gameSave.slice(0, gameLength);
-    new GameBoard(this.game).loadGameState(gameToLoad);
+    new GameBoard(this.game, gameID).loadGameState(gameToLoad);
   }
 }

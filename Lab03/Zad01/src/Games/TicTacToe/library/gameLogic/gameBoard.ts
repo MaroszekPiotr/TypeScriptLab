@@ -2,20 +2,22 @@ import { Guid } from "../../../../helpers/guid";
 import { TicTacToe } from "../../ticTacToe";
 import { SessionStorageStore } from "../storageHelpers/sessionStorage";
 import Cell from "./cell";
-import { IGameState } from "./IGameState";
+import { IGameMoveHistory } from "./IGameMoveHistory";
 import Move from "./move";
 
 export default class GameBoard {
   game: TicTacToe;
   move: Move;
   gameHistory: Cell[] = [];
-  constructor(game: TicTacToe) {
+  gameID: Guid;
+  constructor(game: TicTacToe, gameID: Guid = null) {
     this.game = game;
-    this.createGameBoard(this.game.gameBoardContainer);
-    this.move = new Move(this.game);
+    this.gameID = gameID;
+    this.createGameBoard(this.game.gameBoardContainer, this.gameID);
+    this.move = new Move(this);
   }
-  createGameBoard(gameBoardContainer: HTMLDivElement): void {
-    // if (this.game.gameID === null) this.game.gameID = Guid.newGuid();
+  createGameBoard(gameBoardContainer: HTMLDivElement, gameID: Guid): void {
+    gameID === null ? (this.gameID = Guid.newGuid()) : (this.gameID = gameID);
     this.game.gameBoardContainer.textContent = "";
     this.game.gameInfoBoxContainer.textContent = "";
     this.game.isGameEnd = false;
@@ -53,8 +55,8 @@ export default class GameBoard {
     row.appendChild(cell);
   }
 
-  loadGameState(gameStore: IGameState[]) {
-    this.createGameBoard(this.game.gameBoardContainer);
+  loadGameState(gameStore: IGameMoveHistory[]) {
+    this.createGameBoard(this.game.gameBoardContainer, this.gameID);
     this.game.currentPlayerIndex = 0;
     gameStore.map((turn) => {
       const actualCell: Cell = this.game.boardArray.find(

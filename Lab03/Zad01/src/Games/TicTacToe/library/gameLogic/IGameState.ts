@@ -1,11 +1,7 @@
 import { Guid } from "../../../../helpers/guid";
-
-interface TableCellRef {}
+import { IGameMoveHistory } from "./IGameMoveHistory";
 
 export interface IGameState {
-  positionX: number;
-  positionY: number;
-  id: Guid;
-  tableCellRef: TableCellRef;
-  playerId: number;
+  gameID: Guid;
+  gameState: IGameMoveHistory[];
 }

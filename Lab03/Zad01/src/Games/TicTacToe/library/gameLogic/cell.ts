@@ -1,7 +1,7 @@
 import { Guid } from "../../../../helpers/guid";
-import { IGameState } from "./IGameState";
+import { IGameMoveHistory } from "./IGameMoveHistory";
 
-export default class Cell implements IGameState {
+export default class Cell implements IGameMoveHistory {
   id: Guid;
   playerId: number;
   positionX: number;

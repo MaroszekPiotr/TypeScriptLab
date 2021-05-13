@@ -5,16 +5,14 @@ import TicTacToeUI from "./library/userInterface/ticTacToeUI";
 import { SessionStorageStore } from "./library/storageHelpers/sessionStorage";
 import { LocalStorageStore } from "./library/storageHelpers/localStorage";
 import { Guid } from "../../helpers/guid";
-import { IGameState } from "./library/gameLogic/IGameState";
+import { IGameMoveHistory } from "./library/gameLogic/IGameMoveHistory";
 export class TicTacToe implements IGame {
   boardArray: Cell[];
   currentPlayerIndex: number;
   gameBoardContainer: HTMLDivElement;
-  // gameID: Guid = null; //to nie może tu być
   gameInfoBoxContainer: HTMLDivElement;
   isGameEnd: boolean = false;
   lenghtRouteToWin: number;
-  // gameHistory: IGameState[] = []; to nie może tu być
   moveNumber: number;
   name: string;
   players: Player[];
