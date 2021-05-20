@@ -1,9 +1,7 @@
 import { TicTacToe } from "../../../ticTacToe";
-import Cell from "../../gameLogic/cell";
 import GameBoard from "../../gameLogic/gameBoard";
 import { IGameMoveHistory } from "../../gameLogic/IGameMoveHistory";
 import { IGameState } from "../../gameLogic/IGameState";
-import { SessionStorageStore } from "../../storageHelpers/sessionStorage";
 
 export default class GameMenu {
   game: TicTacToe;

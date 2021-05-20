@@ -1,5 +1,3 @@
-import { Guid } from "../../../../helpers/guid";
-import Cell from "../gameLogic/cell";
 import { IGameState } from "../gameLogic/IGameState";
 
 export class SessionStorageStore {
