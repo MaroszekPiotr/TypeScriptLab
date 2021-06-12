@@ -6,6 +6,7 @@ import { SessionStorageStore } from "./library/storageHelpers/sessionStorage";
 import { LocalStorageStore } from "./library/storageHelpers/localStorage";
 import { Guid } from "../../helpers/guid";
 import { IGameMoveHistory } from "./library/gameLogic/IGameMoveHistory";
+import { getElement } from "../../decorators/getElement";
 export class TicTacToe implements IGame {
   boardArray: Cell[];
   currentPlayerIndex: number;
@@ -22,7 +23,7 @@ export class TicTacToe implements IGame {
   sizeY: number;
   winner: Player = null;
   constructor(sizeX: number = 3, sizeY: number = sizeX) {
-    this.name = "Kółko i krzyżyk";
+    this.name = "TicTacToe";
     this.sizeX = sizeX;
     this.sizeY = sizeY;
     this.boardArray = [];
@@ -36,6 +37,7 @@ export class TicTacToe implements IGame {
     this.sessionMoveHistory = new SessionStorageStore("moveHistory");
     this.saveGame = new LocalStorageStore("gameSaves");
   }
+  @getElement
   getGameElement(): HTMLDivElement {
     const appBoard = <HTMLDivElement>document.createElement("div");
     appBoard.className = "TicTacToeGame";

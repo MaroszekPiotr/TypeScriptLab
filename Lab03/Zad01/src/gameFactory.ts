@@ -5,6 +5,7 @@ import { Chess } from "./Games/chess/chess";
 import { CyberSkin2084 } from "./Games/cyberskin2084/cyberskin2084";
 import { Miner } from "./Games/miner/miner";
 import { IGame } from "./Igame";
+import { disabled } from "./decorators/disabled";
 
 export class GameFactory {
   gameCreator(gameName: AvailableGames): IGame {

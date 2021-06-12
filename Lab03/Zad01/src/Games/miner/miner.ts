@@ -1,3 +1,4 @@
+import { getElement } from "../../decorators/getElement";
 import { IGame } from "../../Igame";
 
 export class Miner implements IGame {
@@ -6,6 +7,7 @@ export class Miner implements IGame {
   constructor() {
     this.name = "Miner";
   }
+  @getElement
   getGameElement(): HTMLElement {
     const div = document.createElement("div");
     div.appendChild(document.createTextNode("Hello Miner"));

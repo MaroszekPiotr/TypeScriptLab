@@ -1,3 +1,5 @@
+import { disabled } from "./decorators/disabled";
+
 export enum AvailableGames {
   TicTacToe = "TicTacToe",
   BattleShips = "BattleShips",

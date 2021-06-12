@@ -2,6 +2,9 @@ import { IGame } from "./Igame";
 import { ThemeSwitch } from "./themeSwitch";
 import { AvailableGames } from "./availableGames";
 import { GameFactory } from "./gameFactory";
+import { disabled } from "./decorators/disabled";
+import { getElement } from "./decorators/getElement";
+
 export class GameLibrary {
   gameLibrary: IGame[];
   applicationRoot: HTMLDivElement;
@@ -54,6 +57,8 @@ export class GameLibrary {
       }
     }
   }
+  @disabled(AvailableGames.CyberSkin2084)
+  @disabled(AvailableGames.Miner)
   private drawGameList(nodePath: HTMLUListElement): void {
     this.gameLibrary.forEach((game, index) => {
       const gameName = <HTMLButtonElement>document.createElement("button");
