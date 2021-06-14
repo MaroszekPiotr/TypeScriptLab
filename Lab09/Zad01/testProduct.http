@@ -1,0 +1,33 @@
+###
+GET http://localhost:3000/products/ HTTP/1.1
+
+###
+
+POST http://localhost:3000/products HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Telewizor",
+    "description": "Telewizor plazmowy",
+    "category": "60c7a7baad6f194dac8c1608",
+    "price": 5000
+}
+
+###
+PUT http://localhost:3000/products/
+content-type: application/json
+
+{
+    "id": "60c7a7d8ad6f194dac8c1609",
+    "name": "Telewizor LCS",
+    "description": "Telewizor LCD",
+    "price": 6000
+}
+
+###
+DELETE http://localhost:3000/products
+content-type: application/json
+
+{
+    "id": "60c7a7d8ad6f194dac8c1609"
+}

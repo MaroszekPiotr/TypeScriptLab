@@ -1,0 +1,28 @@
+###
+GET http://localhost:3000/category/ HTTP/1.1
+
+###
+
+POST http://localhost:3000/category HTTP/1.1
+content-type: application/json
+
+{
+    "name": "Telewizory"
+}
+
+###
+PUT http://localhost:3000/category/
+content-type: application/json
+
+{
+    "id": "60c7a7baad6f194dac8c1608",
+    "name": "Telewizory"
+}
+
+###
+DELETE http://localhost:3000/category
+content-type: application/json
+
+{
+    "id": "60c7a7baad6f194dac8c1608"
+}
