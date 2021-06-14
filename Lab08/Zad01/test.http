@@ -1,5 +1,5 @@
 ###
-GET http://localhost:3000/products HTTP/1.1
+GET http://localhost:3000/products/fridge HTTP/1.1
 
 ###
 
@@ -8,9 +8,22 @@ content-type: application/json
 
 {
     "name": "Telewizor",
+    "category": "tv",
     "description": "Telewizor plazmowy",
     "price": 5000
 }
 
 ###
-DELETE http://localhost:3000/products/3 HTTP/1.1
+PUT http://localhost:3000/products/:category
+content-type: application/json
+
+{
+    "id": "2b308488A59f9B4259Ca0ebD711e8e62d0b7",
+    "name": "Telewizor",
+    "category": "tv",
+    "description": "Telewizor plazmowy",
+    "price": 5000
+}
+
+###
+DELETE http://localhost:3000/products/501c47aeA75bdB4f20C9da8D2e26bc3e6a22 HTTP/1.1
