@@ -1,3 +1,4 @@
+import { ThemeSwitch } from "../../../../../themeSwitch";
 import { TicTacToe } from "../../../ticTacToe";
 import GameBoard from "../../gameLogic/gameBoard";
 import { IGameMoveHistory } from "../../gameLogic/IGameMoveHistory";
@@ -51,6 +52,7 @@ export default class GameMenu {
   }
   private setGameSkin(menuNode: HTMLDivElement) {
     const label = <HTMLLabelElement>document.createElement("label");
+    label.textContent = "skin";
     const switchSkin = this.availableSkinList();
     label.appendChild(switchSkin);
     menuNode.appendChild(label);
@@ -58,12 +60,20 @@ export default class GameMenu {
 
   private availableSkinList(): HTMLSelectElement {
     const switchSkin = <HTMLSelectElement>document.createElement("select");
+    // skórki dla activeGame:
+    // const dsa: HTMLElement = document.querySelector(".activeGame");
+    const themeSwitcher = new ThemeSwitch();
     const skinList = ["dark", "light", "blue", "orange"];
-    skinList.forEach((skin) => {
+    themeSwitcher.addThemes(skinList);
+    themeSwitcher.init();
+    skinList.forEach((skin, index) => {
       const element = <HTMLOptionElement>document.createElement("option");
-      element.value = skin;
+      element.value = index.toString();
       element.textContent = skin;
       switchSkin.appendChild(element);
+    });
+    switchSkin.addEventListener("change", function () {
+      themeSwitcher.changeTheme(Number(this.value));
     });
     return switchSkin;
   }

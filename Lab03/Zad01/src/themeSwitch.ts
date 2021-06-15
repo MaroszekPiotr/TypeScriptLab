@@ -27,7 +27,7 @@ export class ThemeSwitch {
     if (themeNumber < 0 || themeNumber >= this.themes.length) return;
     this.actualTheme = themeNumber;
   }
-  private changeTheme(themeNumber?: number): void {
+  changeTheme(themeNumber?: number): void {
     if (this.themes.length === 0) return;
     themeNumber != null ? this.setThemNumber(themeNumber) : this.nextTheme();
     this.destHTMLElement.setAttribute(

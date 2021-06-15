@@ -1,30 +1,7 @@
+@import "./mixins";
 @import "../Games/TicTacToe/styles/styles.scss";
 @import "variable";
-@import "./mixins";
-$body-color: var(--primaryColor);
-body {
-  color: var(--quaternaryColor);
-  background-color: var(--primaryColor);
-}
-// div#root {
-//   display: flex;
-// }
-// table,
-// th,
-// td {
-//   border: 5px solid black;
-//   text-align: center;
-//   border-collapse: collapse;
-//   background-color: bisque;
-// }
-// td {
-//   width: 5vw;
-//   height: 5vw;
-//   font-size: 3rem;
-//   cursor: pointer;
-// }
 
-//style draft
 * {
   margin: 0;
   box-sizing: border-box;
@@ -32,96 +9,32 @@ body {
 }
 
 body {
-  font-family: Arial, Helvetica, sans-serif;
-  --primaryColor: #222831;
-  --secondaryColor: #393e46;
-  --tertiaryColor: #00adb5;
-  --quaternaryColor: #eeeeee;
-}
-
-table,
-th,
-td {
-  border: 5px solid black;
-  text-align: center;
-  border-collapse: collapse;
-  background-color: bisque;
-}
-td {
-  width: 5vw;
-  height: 5vw;
-  font-size: 3rem;
-  cursor: pointer;
+  @include colors(var(--quaternaryColor), var(--primaryColor));
 }
 
 .container {
   display: flex;
   background-color: var(--primaryColor);
   min-height: 100vh;
-}
-
-.gameList {
-  background-color: var(--primaryColor);
-  margin-top: 10vh;
-}
-
-.gameList button {
-  width: 100%;
-  text-align: left;
-  padding: 1vh 1vw;
-}
-
-.activeGame,
-.TicTacToeGame {
-  display: flex;
-  width: 100%;
-}
-
-.gamePanel {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: column;
-  width: 80%;
-  flex-grow: 1;
-  background-color: var(--secondaryColor);
-}
-
-.gameTitle {
-  background-color: var(--primaryColor);
-  text-align: center;
-}
-.gameTitle > h1 {
-  padding: 1vw;
-}
-
-.gameMenu {
-  display: flex;
-  min-height: 5vh;
-  justify-content: space-around;
-  align-items: center;
-  background-color: orangered;
-}
-
-.gameMenu button,
-.gameMenu select {
-  padding: 1vw;
-}
-.gameMenu #inputBoardSizeStyle {
-  padding: 1vw;
-}
-.gameBoard {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--quaternaryColor);
-  min-height: 50%;
-}
-.gameInfoBox {
-  font-size: 4rem;
-  text-align: center;
-  margin: auto 0;
-}
-.gameHistory {
-  width: 20%;
-  background-color: var(--primaryColor);
+  .gameList {
+    background-color: var(--primaryColor);
+    margin-top: 10vh;
+    h4 {
+      text-align: center;
+      margin-bottom: 1vh;
+    }
+    & > button {
+      background-color: var(--tertiaryColor);
+      margin-bottom: 2vh;
+    }
+    button {
+      width: 100%;
+      text-align: left;
+      padding: 1vh 1vw;
+    }
+  }
+  .activeGame {
+    display: flex;
+    width: 100%;
+  }
 }
